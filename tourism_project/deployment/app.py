@@ -12,6 +12,9 @@ if uploaded is not None:
   st.write("Input preview:", df.head())
   try:
     model = joblib.load(model_path)
+    # Drop the target column 'MonthlyIncome' if it exists
+    if 'MonthlyIncome' in df.columns:
+        df = df.drop(columns=['MonthlyIncome'])
     preds = model.predict(pd.get_dummies(df, drop_first=True))
     st.write("Predictions:", preds)
   except Exception as e:
